@@ -1,0 +1,279 @@
+/* 기본 글꼴 설정 - TailwindCSS 유틸리티 클래스와 함께 사용 / 基本フォント設定 - TailwindCSSユーティリティクラスと共に使用 */
+body {
+    font-family: 'Work Sans', 'Noto Sans', sans-serif;
+}
+
+/* 검색 입력 필드 내부 아이콘 스타일 조정 / 検索入力フィールド内アイコンのスタイル調整 */
+input[type="text"]::placeholder {
+    color: #6b6b6b;
+}
+
+.img-logo {
+    width: 20%;
+    height: auto; /* 비율을 유지하면서 크기 조절 / 比率を維持しながらサイズ調整 */
+}
+
+/* 위치 버튼에 라운드 테두리 추가 및 호버 효과 / 位置ボタンにラウンド枠を追加し、ホバー効果を適用 */
+#locationButton {
+    border: solid transparent;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#locationButton:hover {
+    background-color: #d4d4d4;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 입력 필드 내 x 버튼 스타일 / 入力フィールド内のxボタンのスタイル */
+.clear-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: #999;
+    background: none;
+    border: none;
+    padding: 0;
+    display: none;
+}
+
+.input-clear input:not(:placeholder-shown) + .clear-button {
+    display: block;
+}
+
+/* 기본 라디오 버튼 숨기기 / 基本ラジオボタンを非表示 */
+input[type='radio'] {
+    display: none;
+}
+
+/* 기본 라벨 스타일 설정 / 基本ラベルのスタイル設定 */
+label.radio-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 84px; /* 최소 너비 설정 / 最小幅の設定 */
+    padding: 0 16px; /* 좌우 패딩을 통해 내부 여유 공간 확보 / 左右パディングで内部スペースを確保 */
+    height: 44px;
+    border-radius: 0.667rem;
+    cursor: pointer;
+    border: 0.667px solid #dedede;
+    transition: border-color 0.3s;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 / テキストの折り返しを防止 */
+    box-sizing: border-box; /* 패딩을 포함한 너비와 높이 계산 / パディングを含む幅と高さの計算 */
+}
+
+/* 선택된 라벨의 테두리 스타일 / 選択されたラベルの枠スタイル */
+input[type='radio']:checked + label.radio-label {
+    border-color: black;
+    border-width: 2px;
+}
+
+/* 정렬 기준 아이콘 숨기기 / ソート基準アイコンを非表示 */
+label.sort-icon {
+    display: none;
+}
+
+/* 반응형 CSS: 화면 크기 줄였을 때 정렬 기준을 아이콘으로 변경 / レスポンシブCSS: 画面サイズが小さくなったときにソート基準をアイコンに変更 */
+@media (max-width: 640px) {
+    label.sort-label {
+        display: none;
+    }
+    label.sort-icon {
+        display: flex;
+    }
+}
+
+/* 경고 메시지 스타일 / 警告メッセージのスタイル */
+.warning-message {
+    margin: 0;
+    color: red;
+    font-size: 14px;
+    display: block;
+    text-align: left;
+    padding-top: 4px; /* 한 줄 아래로 이동 / 1行下に移動 */
+    margin-top: 8px; /* 경고 메시지 위에 줄바꿈 추가 / 警告メッセージの上に改行を追加 */
+}
+
+/* 추가 반응형 디자인을 위한 커스텀 스타일링 / 追加のレスポンシブデザイン用のカスタムスタイリング */
+@media (min-width: 768px) {
+    .flex-wrap {
+        flex-wrap: wrap;
+    }
+}
+
+.footer-text a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+/* 비활성화된 입력 필드 스타일 / 無効化された入力フィールドのスタイル */
+input:disabled {
+    background-color: #f0f0f0;
+    color: #a0a0a0;
+    cursor: not-allowed;
+}
+
+/* 페이지 번호 간 간격 조정 / ページ番号間の間隔調整 */
+#paginationContainer a {
+    margin: 0 4px;
+}
+
+/* 숫자 입력 필드에서 화살표 제거 / 数値入力フィールドの矢印を削除 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.mt-1 {
+    margin-top: 0.25rem; /* 위도, 경도 입력 필드와 경고 메시지 사이 간격 추가 / 緯度、経度入力フィールドと警告メッセージの間隔を追加 */
+}
+
+.custom-autocomplete-list {
+    background-color: #fff;
+    border-radius: 0 0 16px 16px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    width: 376px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    z-index: 1000; /* 검색 창 위에 나타나도록 z-index 설정 / 検索ウィンドウの上に表示するようにz-indexを設定 */
+}
+
+.custom-autocomplete-list .pac-item {
+    padding: 10px;
+    font-size: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.custom-autocomplete-list .pac-item:hover {
+    background-color: #f8f8f8;
+}
+
+.dropdown-container {
+    display: flex;
+    justify-content: space-between; /* 요소들 간에 공간 분배 / 要素間にスペースを分配 */
+    gap: 16px; /* 요소들 간격 / 要素間のギャップ */
+    padding: 20px 0; /* 상하 패딩 / 上下のパディング */
+}
+
+.dropdown-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-label {
+    color: black; /* 텍스트 색상 / テキストの色 */
+    font-size: 1.125rem; /* 글꼴 크기 (text-lg 대체) / フォントサイズ (text-lg の代わり) */
+    font-weight: bold; /* 글꼴 두께 (font-bold 대체) / フォントの太さ (font-bold の代わり) */
+    margin-bottom: 8px; /* 드롭다운과 라벨 사이 간격 / ドロップダウンとラベルの間の間隔 */
+}
+
+#languageDropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 8px;
+    z-index: 1000;
+    top: 30px;
+    left: 0;
+}
+
+#languageDropdown.show {
+    display: block;
+}
+
+#languageDropdown div {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px; /* 모서리 라운드 처리 / 角を丸める */
+}
+
+#languageDropdown div:hover {
+    background-color: #f0f0f0; /* 호버 시 배경색 변경 / ホバー時に背景色を変更 */
+}
+
+/*    ========== 모달창에서 사용하는 부분 / モーダルウィンドウで使用する部分 ================= */
+
+/* 모달 스타일 / モーダルスタイル */
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 모달 열릴 때 보이도록 설정 / モーダルが開かれた時に表示されるように設定 */
+.modal.show {
+    display: flex;
+}
+
+/* 닫기 버튼 / 閉じるボタン */
+#closeModal {
+    font-size: 1.5rem;
+    color: #000;
+    cursor: pointer;
+}
+
+/* 기본적인 스타일링 / 基本的なスタイリング */
+body {
+    font-family: "Work Sans", sans-serif;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal-content {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.1); /* Firefox */
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 8px; /* Chrome, Safari, Opera */
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* Scrollbar 트랙 색상 / スクロールバートラックの色 */
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4); /* Scrollbar 색상 / スクロールバーの色 */
+    border-radius: 10px; /* 스크롤바의 둥근 모서리 / スクロールバーの角を丸める */
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.6); /* 스크롤바를 잡았을 때 더 진한 색상 / スクロールバーをつかんだ時に濃い色 */
+}
+
+#modalMap {
+    border-radius: 16px; /* 원하는 크기의 둥근 테두리 / 任意のサイズの丸い枠 */
+    overflow: hidden; /* 둥근 테두리가 적용된 부분을 넘어가는 부분을 숨기기 위해 필수 / 丸い枠を超える部分を隠すために必要 */
+    width: 100%;
+    height: 400px;  /* 적당한 높이 설정 / 適度な高さの設定 */
+}
+
+.result-item {
+    transition: background-color 0.3s ease; /* 부드러운 색상 전환 / スムーズな色の切り替え */
+    padding: 10px; /* 여백 추가 (원하는 대로 조절 가능) / 余白を追加（お好みで調整可能） */
+    border-radius: 8px; /* 모서리 둥글게 / 角を丸く */
+}
+
+.result-item:hover {
+    background-color: #f0f0f0; /* 호버 시 배경색 변경 / ホバー時に背景色を変更 */
+}

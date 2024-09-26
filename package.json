@@ -1,0 +1,19 @@
+{
+    "name": "amami",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.17.1",
+        "node-fetch": "^3.3.2"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.20",
+        "postcss": "^8.4.47",
+        "tailwindcss": "^3.4.13"
+    }
+}
