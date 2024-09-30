@@ -1,12 +1,3 @@
-// // 클라이언트에서 서버에 API 데이터 요청
-// fetch('/api/restaurants')
-//   .then(response => response.json())
-//   .then(data => {
-//     console.log('Restaurants data:', data);  // 서버에서 받은 데이터를 출력
-//     // 데이터를 활용하는 코드 (예: 화면에 레스토랑 목록 표시)
-//   })
-//   .catch(error => console.error('Error:', error));
-
 
 // ============ 공용으로 사용하는 부분 / 共通で使用する部分 ================ 
 
@@ -173,11 +164,21 @@ function selectLanguage(lang) {
     loadLanguage(currentLang); // 선택된 언어 로드 / 選択された言語をロード
 
     // 현재 선택된 언어 표시 업데이트 / 現在選択された言語表示を更新
-    document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
+    let selectedLangText;
+    if (currentLang === 'kr') {
+        selectedLangText = '한국어';
+    } else if (currentLang === 'ja') {
+        selectedLangText = '日本語';
+    } else {
+        selectedLangText = 'English';
+    }
+
+    document.getElementById('selectedLang').innerText = selectedLangText;
 
     // 드롭다운 닫기 / ドロップダウンを閉じる
     document.getElementById('languageDropdown').style.display = 'none'; // 선택 후 드롭다운 닫기 / 選択後ドロップダウンを閉じる
 }
+
 
 //드롭다운 외부 클릭 시 드롭다운 숨기기 / ドロップダウンの外部をクリックした時にドロップダウンを非表示
 document.addEventListener('click', function(event) {
@@ -190,12 +191,23 @@ document.addEventListener('click', function(event) {
     }
 });
 
-//페이지 로드 시 기본 언어 로드 / ページロード時にデフォルトの言語をロード
+// 페이지 로드 시 기본 언어 로드 / ページロード時にデフォルトの言語をロード
 window.onload = () => {
     loadLanguage(currentLang); // 기본 언어 로드 / デフォルトの言語をロード
+
     // 초기 언어 표시 / 初期言語の表示
-    document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
+    let selectedLangText;
+    if (currentLang === 'kr') {
+        selectedLangText = '한국어';
+    } else if (currentLang === 'ja') {
+        selectedLangText = '日本語';
+    } else {
+        selectedLangText = 'English';
+    }
+    
+    document.getElementById('selectedLang').innerText = selectedLangText;
 };
+
 
 // ================ index.html에서 사용하는 부분 / index.htmlで使用する部分 ==================
 
@@ -329,11 +341,27 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('header').innerHTML = headerContent;
     document.getElementById('footer').innerHTML = footerContent;
 
-    // result.html 페이지에서만 모달 관련 코드 실행 / result.htmlページでのみモーダル関連コードを実行
+    // index.html에서 Google Places API를 로드
+    if (window.location.pathname.includes('index.html')) {
+        window.onload = loadGooglePlacesApi;
+    }
+    // result.html에서 Google Maps API를 로드
+    if (window.location.pathname.includes('result.html')) {
+        window.onload = loadGoogleMapsApi;
+    }
+
+    // 언어 데이터 로드
+    loadLanguage(currentLang);
+
+    // 초기 언어 표시 설정
+    document.getElementById('selectedLang').innerText = currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English';
+
+
+    // 페이지가 result.html인 경우에만 모달 관련 코드 실행
     if (window.location.pathname.includes('result.html')) {
         const modal = document.getElementById('restaurantModal');
 
-        // 모달 외부 영역 클릭 시 모달 닫기 / モーダル外の領域をクリックした時にモーダルを閉じる
+        // 모달 외부 클릭 시 모달 닫기
         if (modal) {
             window.addEventListener('click', (event) => {
                 if (event.target === modal) {
@@ -341,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
-            // 모달이 열린 후 스크롤을 맨 위로 설정 / モーダルが開かれた後、スクロールを最上部に設定
+            // 모달이 열린 후 스크롤을 맨 위로 설정
             modal.addEventListener("shown.bs.modal", function () {
                 const modalContent = document.querySelector(".modal-content");
                 if (modalContent) {
@@ -350,37 +378,36 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
 
-        // 길안내 버튼 클릭 이벤트 추가 / 道案内ボタンクリックイベントの追加
+        // 길안내 버튼 클릭 이벤트 추가
         const navigateButton = document.getElementById('navigateButton');
         if (navigateButton) {
             navigateButton.addEventListener('click', function() {
-                // URL에서 사용자의 위도와 경도 값을 가져오기 / URLからユーザーの緯度と経度の値を取得
+                // URL에서 사용자의 위도와 경도 값을 가져오기
                 const params = new URLSearchParams(window.location.search);
                 const userLat = parseFloat(params.get('userLat')) || validUserLat;
                 const userLng = parseFloat(params.get('userLng')) || validUserLng;
 
-                // 레스토랑 위치 가져오기 / レストランの位置を取得
+                // 레스토랑 위치 가져오기
                 const destLat = restaurantLat;
                 const destLng = restaurantLng;
 
-                // 사용자 위치와 목적지로 길안내 호출 / ユーザーの位置と目的地への道案内を呼び出し
+                // 사용자 위치와 목적지로 길안내 호출
                 if (userLat !== null && userLng !== null && destLat !== null && destLng !== null) {
                     openGoogleMapsNavigation(userLat, userLng, destLat, destLng);
                 } else {
-                    console.error('위치 정보가 올바르지 않습니다.'); // 위치 정보가 유효하지 않음 / 位置情報が正しくありません。
-
+                    console.error('위치 정보가 올바르지 않습니다.');
                 }
             });
         }
     }
 
-    // result.html 페이지에서만 검색 결과 이벤트 추가 / result.htmlページでのみ検索結果イベントを追加
+    // result.html에서만 검색 결과 이벤트 추가
     if (window.location.pathname.includes('result.html') && !hasInitialized) {
-        initResultPage();  // result.html 페이지에서만 실행 / result.htmlページでのみ実行
-        hasInitialized = true; // 초기화 완료 / 初期化完了
+        initResultPage();  // result.html에서만 실행
+        hasInitialized = true;  // 초기화 완료
     }
 
-    // 검색 반경과 정렬 기준 라디오 버튼에 대한 이벤트 리스너 추가 / 検索範囲とソート基準のラジオボタンに対するイベントリスナーの追加
+    // 검색 반경과 정렬 기준 라디오 버튼 이벤트 리스너 추가
     document.querySelectorAll('input[name="radius"]').forEach((radio) => {
         radio.addEventListener('change', () => hideError('radius-warning'));
     });
@@ -388,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function () {
         radio.addEventListener('change', () => hideError('sort-warning'));
     });
 
-    // 검색 버튼 클릭 시 현재 위치 가져오기 버튼 설정 / 検索ボタンクリック時に現在位置を取得するボタンの設定
+    // 위치 가져오기 버튼 클릭 시 이벤트 설정
     const locationButton = document.getElementById('locationButton');
     const latitudeInput = document.getElementById('latitudeInput');
     const longitudeInput = document.getElementById('longitudeInput');
@@ -403,31 +430,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     latitudeInput.value = latitude;
                     longitudeInput.value = longitude;
     
-                    // 위치 관련 경고 숨김 / 位置関連の警告を隠す
+                    // 위치 관련 경고 숨김
                     hideError('latitudeWarning');
                     hideError('longitudeWarning');
     
                 }, function (error) {
                     switch (error.code) {
                         case error.PERMISSION_DENIED:
-                            alert("位置情報の提供が拒否されました。");  // 위치 정보 제공이 거부됨 / 位置情報の提供が拒否されました。
+                            alert("위치 정보 제공이 거부되었습니다.");
                             break;
                         case error.POSITION_UNAVAILABLE:
-                            alert("位置情報を利用できません。");  // 위치 정보 사용 불가 / 位置情報を利用できません。
+                            alert("위치 정보를 이용할 수 없습니다.");
                             break;
                         case error.TIMEOUT:
-                            alert("位置情報リクエストがタイムアウトしました。");  // 위치 정보 요청 타임아웃 / 位置情報リクエストがタイムアウトしました。
+                            alert("위치 정보 요청이 시간 초과되었습니다.");
                             break;
                         default:
-                            alert("位置取得中に不明なエラーが発生しました。");  // 알 수 없는 오류 발생 / 位置取得中に不明なエラーが発生しました。
+                            alert("위치 정보 조회 중 알 수 없는 오류가 발생했습니다.");
                     }
                 });
             } else {
-                alert('現在のブラウザでは位置サービスがサポートされていません');  // 위치 서비스 지원하지 않는 브라우저 / 現在のブラウザでは位置サービスがサポートされていません。
+                alert('현재 브라우저에서 위치 서비스를 지원하지 않습니다.');
             }
         });
     }    
 });
+
 
 // Google Maps Places API 자동완성 / Google Maps Places API 自動補完
 function initAutocomplete() {
@@ -791,14 +819,7 @@ function onGoogleMapsLoad() {
         initMap(); 
     }
 }
-// index.html에서 Google Places API를 로드
-if (window.location.pathname.includes('index.html')) {
-    window.onload = loadGooglePlacesApi;
-}
-// result.html에서 Google Maps API를 로드
-if (window.location.pathname.includes('result.html')) {
-    window.onload = loadGoogleMapsApi;
-}
+
 
 // 모달을 여는 함수 / モーダルを開く関数
 async function openModal(restaurant) {
