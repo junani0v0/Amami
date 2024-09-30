@@ -11,8 +11,10 @@
 // ============ 공용으로 사용하는 부분 / 共通で使用する部分 ================ 
 
 const headerContent = `
-<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#EEEEEE] px-10 py-3">
-    <div class="flex items-center gap-4">
+<header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#EEEEEE] px-10 py-3"
+    >
+        <div class="flex items-center gap-4">
             <a href="index.html">
                 <img
                     src="images/logo.png"
@@ -21,12 +23,93 @@ const headerContent = `
                 />
             </a>
         </div>
-    <div>
-        <a href="index.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-black text-[#FFFFFF] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-800">
-            Search Page
-        </a>
-    </div>
-</header>
+        <div class="flex items-center gap-4 relative">
+            <!-- 다국어 버튼 / 多言語ボタン-->
+            <div
+                id="languageSelector"
+                style="display: flex; align-items: center"
+            >
+                <button
+                    id="languageIcon"
+                    onclick="toggleDropdown(event)"
+                    onKeyDown="if(event.key === 'Enter' || event.key === ' ') toggleDropdown(event);"
+                    style="
+                        cursor: pointer;
+                        background: none;
+                        border: none;
+                        padding: 0;
+                    "
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24px"
+                        height="24px"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm3.222,7H8.778A19.614,19.614,0,0,1,12,2.412,19.57,19.57,0,0,1,15.222,7Zm.8,2a10.211,10.211,0,0,1,.476,3,10.211,10.211,0,0,1-.476,3H7.976A10.211,10.211,0,0,1,7.5,12a10.211,10.211,0,0,1,.476-3ZM9.4,2.356A19.676,19.676,0,0,0,6.574,7H3.353A10.031,10.031,0,0,1,9.4,2.356ZM2,12a9.986,9.986,0,0,1,.461-3H5.9a12.016,12.016,0,0,0-.4,3,12.016,12.016,0,0,0,.4,3H2.461A9.986,9.986,0,0,1,2,12Zm1.353,5H6.574A19.676,19.676,0,0,0,9.4,21.644,10.031,10.031,0,0,1,3.353,17Zm5.425,0h6.444A19.614,19.614,0,0,1,12,21.588,19.57,19.57,0,0,1,8.778,17Zm5.827,4.644A19.676,19.676,0,0,0,17.426,17h3.221A10.031,10.031,0,0,1,14.605,21.644ZM22,12a9.986,9.986,0,0,1-.461,3H18.1a12.016,12.016,0,0,0,.4-3,12.016,12.016,0,0,0-.4-3h3.437A9.986,9.986,0,0,1,22,12ZM17.426,7a19.676,19.676,0,0,0-2.821-4.644A10.031,10.031,0,0,1,20.647,7Z"
+                        ></path>
+                    </svg>
+                </button>
+
+                <div
+                    id="languageDropdown"
+                    style="
+                        display: none;
+                        position: absolute;
+                        top: 40px;
+                        left: 0;
+                        z-index: 10;
+                        background: white;
+                        border: 1px solid #ccc;
+                        border-radius: 5px;
+                    "
+                >
+                    <div
+                        onclick="selectLanguage('ja')"
+                        style="padding: 10px; cursor: pointer"
+                    >
+                        日本語
+                    </div>
+                    <div
+                        onclick="selectLanguage('en')"
+                        style="padding: 10px; cursor: pointer"
+                    >
+                        English
+                    </div>
+                    <div
+                        onclick="selectLanguage('kr')"
+                        style="padding: 10px; cursor: pointer"
+                    >
+                        한국어
+                    </div>
+                </div>
+            </div>
+
+            <div
+                id="selectedLang"
+                onclick="toggleDropdown(event)"
+                style="
+                    cursor: pointer;
+                    margin-left: 5px;
+                    display: flex;
+                    align-items: center;
+                "
+            >
+                <!-- 기본 언어 표시 / 基本言語を表示 -->
+            </div>
+            <!-- 검색 페이지 버튼 / 検索ページボタン-->
+            <a
+                href="index.html"
+                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-black text-[#FFFFFF] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-800"
+            >
+                Search Page
+            </a>
+        </div>
+    </header>
 `;
 
 const footerContent = `
@@ -41,78 +124,78 @@ const footerContent = `
 </footer>
 `;
 
-// JSON 파일 경로 설정 / JSONファイルのパス設定
-// const translations = {
-//     ja: 'json/ja.json', // 일본어 JSON 파일 경로 / 日本語のJSONファイルパス
-//     kr: 'json/kr.json', // 한국어 JSON 파일 경로 / 韓国語のJSONファイルパス
-//     en: 'json/en.json'  // 영어 JSON 파일 경로 / 英語のJSONファイルパス
-// };
+//JSON 파일 경로 설정 / JSONファイルのパス設定
+const translations = {
+    ja: 'json/ja.json', // 일본어 JSON 파일 경로 / 日本語のJSONファイルパス
+    kr: 'json/kr.json', // 한국어 JSON 파일 경로 / 韓国語のJSONファイルパス
+    en: 'json/en.json'  // 영어 JSON 파일 경로 / 英語のJSONファイルパス
+};
 
-// 기본 언어 설정 (로컬 스토리지에서 불러오기) / デフォルトの言語設定（ローカルストレージから取得）
-// let currentLang = localStorage.getItem('language') || 'ja'; // 로컬 스토리지에서 언어 가져오기, 없으면 일본어로 설정 / ローカルストレージから言語を取得、なければ日本語に設定
+//기본 언어 설정 (로컬 스토리지에서 불러오기) / デフォルトの言語設定（ローカルストレージから取得）
+let currentLang = localStorage.getItem('language') || 'ja'; // 로컬 스토리지에서 언어 가져오기, 없으면 일본어로 설정 / ローカルストレージから言語を取得、なければ日本語に設定
 
-// 언어 데이터 로드 함수 / 言語データのロード関数
-// function loadLanguage(lang) {
-//     fetch(translations[lang]) // 선택된 언어의 JSON 파일을 가져옴 / 選択された言語のJSONファイルを取得
-//         .then(response => response.json()) // JSON 파일을 파싱 / JSONファイルをパース
-//         .then(data => {
-//             // 데이터 키에 따라 텍스트 업데이트 / データキーに基づいてテキストを更新
-//             document.querySelectorAll("[data-i18n]").forEach(element => {
-//                 const key = element.getAttribute("data-i18n");
-//                 if (data[key]) {
-//                     element.innerText = data[key]; // 해당 키에 맞는 텍스트로 변경 / そのキーに対応するテキストに変更
-//                 }
-//             });
+//언어 데이터 로드 함수 / 言語データのロード関数
+function loadLanguage(lang) {
+    fetch(translations[lang]) // 선택된 언어의 JSON 파일을 가져옴 / 選択された言語のJSONファイルを取得
+        .then(response => response.json()) // JSON 파일을 파싱 / JSONファイルをパース
+        .then(data => {
+            // 데이터 키에 따라 텍스트 업데이트 / データキーに基づいてテキストを更新
+            document.querySelectorAll("[data-i18n]").forEach(element => {
+                const key = element.getAttribute("data-i18n");
+                if (data[key]) {
+                    element.innerText = data[key]; // 해당 키에 맞는 텍스트로 변경 / そのキーに対応するテキストに変更
+                }
+            });
 
-//             // 데이터 키에 따라 플레이스홀더 업데이트 / データキーに基づいてプレースホルダーを更新
-//             document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
-//                 const key = element.getAttribute("data-i18n-placeholder");
-//                 if (data[key]) {
-//                     element.setAttribute("placeholder", data[key]); // 해당 키에 맞는 플레이스홀더로 변경 / そのキーに対応するプレースホルダーに変更
-//                 }
-//             });
-//         })
-//         .catch(error => console.error('Error loading language:', error)); // 오류 처리 / エラー処理
-// }
+            // 데이터 키에 따라 플레이스홀더 업데이트 / データキーに基づいてプレースホルダーを更新
+            document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-i18n-placeholder");
+                if (data[key]) {
+                    element.setAttribute("placeholder", data[key]); // 해당 키에 맞는 플레이스홀더로 변경 / そのキーに対応するプレースホルダーに変更
+                }
+            });
+        })
+        .catch(error => console.error('Error loading language:', error)); // 오류 처리 / エラー処理
+}
 
-// 드롭다운 토글 함수 / ドロップダウンのトグル関数
-// function toggleDropdown(event) {
-//     const dropdown = document.getElementById('languageDropdown');
-//     const expanded = dropdown.style.display === 'block';
-//     dropdown.style.display = expanded ? 'none' : 'block';
-//     document.getElementById('languageIcon').setAttribute('aria-expanded', !expanded);
-// }
+//드롭다운 토글 함수 / ドロップダウンのトグル関数
+function toggleDropdown(event) {
+    const dropdown = document.getElementById('languageDropdown');
+    const expanded = dropdown.style.display === 'block';
+    dropdown.style.display = expanded ? 'none' : 'block';
+    document.getElementById('languageIcon').setAttribute('aria-expanded', !expanded);
+}
 
-// 언어 선택 함수 / 言語選択関数
-// function selectLanguage(lang) {
-//     currentLang = lang; // 현재 언어 업데이트 / 現在の言語を更新
-//     localStorage.setItem('language', currentLang); // 로컬 스토리지에 언어 저장 / ローカルストレージに言語を保存
-//     loadLanguage(currentLang); // 선택된 언어 로드 / 選択された言語をロード
+//언어 선택 함수 / 言語選択関数
+function selectLanguage(lang) {
+    currentLang = lang; // 현재 언어 업데이트 / 現在の言語を更新
+    localStorage.setItem('language', currentLang); // 로컬 스토리지에 언어 저장 / ローカルストレージに言語を保存
+    loadLanguage(currentLang); // 선택된 언어 로드 / 選択された言語をロード
 
-//     // 현재 선택된 언어 표시 업데이트 / 現在選択された言語表示を更新
-//     document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
+    // 현재 선택된 언어 표시 업데이트 / 現在選択された言語表示を更新
+    document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
 
-//     // 드롭다운 닫기 / ドロップダウンを閉じる
-//     document.getElementById('languageDropdown').style.display = 'none'; // 선택 후 드롭다운 닫기 / 選択後ドロップダウンを閉じる
-// }
+    // 드롭다운 닫기 / ドロップダウンを閉じる
+    document.getElementById('languageDropdown').style.display = 'none'; // 선택 후 드롭다운 닫기 / 選択後ドロップダウンを閉じる
+}
 
-// 드롭다운 외부 클릭 시 드롭다운 숨기기 / ドロップダウンの外部をクリックした時にドロップダウンを非表示
-// document.addEventListener('click', function(event) {
-//     const dropdown = document.getElementById('languageDropdown');
-//     const languageIcon = document.getElementById('languageIcon');
-//     const selectedLang = document.getElementById('selectedLang');
+//드롭다운 외부 클릭 시 드롭다운 숨기기 / ドロップダウンの外部をクリックした時にドロップダウンを非表示
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('languageDropdown');
+    const languageIcon = document.getElementById('languageIcon');
+    const selectedLang = document.getElementById('selectedLang');
 
-//     if (!languageIcon.contains(event.target) && !dropdown.contains(event.target) && !selectedLang.contains(event.target)) {
-//         dropdown.style.display = 'none'; // 드롭다운 숨기기 / ドロップダウンを非表示
-//     }
-// });
+    if (!languageIcon.contains(event.target) && !dropdown.contains(event.target) && !selectedLang.contains(event.target)) {
+        dropdown.style.display = 'none'; // 드롭다운 숨기기 / ドロップダウンを非表示
+    }
+});
 
-// 페이지 로드 시 기본 언어 로드 / ページロード時にデフォルトの言語をロード
-// window.onload = () => {
-//     loadLanguage(currentLang); // 기본 언어 로드 / デフォルトの言語をロード
-//     // 초기 언어 표시 / 初期言語の表示
-//     document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
-// };
+//페이지 로드 시 기본 언어 로드 / ページロード時にデフォルトの言語をロード
+window.onload = () => {
+    loadLanguage(currentLang); // 기본 언어 로드 / デフォルトの言語をロード
+    // 초기 언어 표시 / 初期言語の表示
+    document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
+};
 
 // ================ index.html에서 사용하는 부분 / index.htmlで使用する部分 ==================
 
@@ -428,14 +511,14 @@ function initResultPage() {
     }
 }
 
-// 사용자의 위치나 URL에서 가져온 위도/경도를 사용하여 검색을 수행하는 함수 / ユーザーの位置やURLから取得した緯度/経度を使って検索を実行する関数
+// 사용자의 위치나 URL에서 가져온 위도/경도를 사용하여 검색을 수행하는 함수
+// ユーザーの位置やURLから取得した緯度/経度を使って検索を実行する関数
 function executeSearch(lat, lng) {
     const params = new URLSearchParams(window.location.search);
     const searchRadius = params.get('radius') || '3'; // 기본값 3 (1km) / デフォルト値3 (1km)
     const sortOrder = params.get('order') || '4'; // 기본값 4 (추천 순) / デフォルト値4 (おすすめ順)
     const genre = params.get('genre') || ''; // 장르 파라미터 가져오기 / ジャンルパラメータを取得
     const currentPage = parseInt(params.get('page')) || 1; // 현재 페이지 번호 / 現在のページ番号
-    const apiKey = 'f781b758746f24b7';
 
     // 각 요소가 존재하는지 확인하고 값을 설정 / 各要素が存在するか確認し、値を設定
     const radiusSelect = document.getElementById('radiusSelect');
@@ -453,13 +536,15 @@ function executeSearch(lat, lng) {
         genreSelect.value = genre;
     }
 
-    // 위도와 경도를 이용해 검색 수행 / 緯度と経度を使って検索を実行
-    searchByCoordinates(apiKey, lat, lng, searchRadius, sortOrder, genre, currentPage);
+    // 위도와 경도를 이용해 서버로 검색 요청 수행 / 緯度と経度を使ってサーバーに検索リクエストを送信
+    searchByCoordinates(lat, lng, searchRadius, sortOrder, genre, currentPage);
 }
 
-// 위도와 경도로 식당 검색을 수행하는 함수 / 緯度と経度でレストラン検索を実行する関数
-function searchByCoordinates(apiKey, lat, lng, radius, order, genre, page) {
-    const apiUrl = `https://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key=${apiKey}&lat=${lat}&lng=${lng}&range=${radius}&order=${order}&genre=${genre}&start=${(page - 1) * 10 + 1}&count=10&format=json`;
+// 위도와 경도로 식당 검색을 수행하는 함수
+// 緯度と経度でレストラン検索を実行する関数
+function searchByCoordinates(lat, lng, radius, order, genre, page) {
+    // 서버로 요청을 보내 Hot Pepper API에 대신 요청을 처리하게 함 / サーバーにリクエストを送り、Hot Pepper APIに代わりにリクエストを処理させる
+    const apiUrl = `/api/restaurants?lat=${lat}&lng=${lng}&radius=${radius}&order=${order}&genre=${genre}&page=${page}`;
 
     fetch(apiUrl)
     .then(response => response.json())
@@ -473,8 +558,8 @@ function searchByCoordinates(apiKey, lat, lng, radius, order, genre, page) {
         }
     })
     .catch(error => {
-        console.error('検索中にエラーが発生:', error); // 検索中にエラーが発生
-        alert('検索中にエラーが発生しました。再度お試しください。'); // 検索中にエラーが発生しました。再度お試しください。
+        console.error('검색 중에 에러 발생:', error);  // 검색 중에 에러 발생 / 検索中にエラーが発生
+        alert('検索中にエラーが発生しました。もう一度お試しください。');  // 검색 중 에러 발생 메시지 / 検索中にエラーが発生しました。再度お試しください。
     });
 }
 
@@ -613,44 +698,106 @@ let isModalOpen = false; // 모달이 열려 있는지 추적하는 변수 / モ
 let map; // 지도 객체를 전역으로 선언하여 모달이 열릴 때만 초기화 / 地図オブジェクトをグローバルに宣言し、モーダルが開かれたときのみ初期化
 let restaurant; // 전역 변수로 선언 / グローバル変数として宣言
 
-// Google Maps API 키 / Google Maps APIキー
-const googleMapsApiKey = 'AIzaSyAH_PSZNCqqKxk_pXjIiG0PykBKJZs8L1A';
-let isGoogleMapsLoaded = false; // Google Maps API가 로드되었는지 확인하는 변수 / Google Maps APIがロードされたか確認する変数
+let isGooglePlacesLoaded = false; // Google Places API가 로드되었는지 확인하는 변수
+let isGoogleMapsLoaded = false; // Google Maps API가 로드되었는지 확인하는 변수
 
-// Google Maps API를 동적으로 로드하는 함수 / Google Maps APIを動的にロードする関数
-function loadGoogleMapsApi() {
-    return new Promise((resolve, reject) => {
-        if (!isGoogleMapsLoaded) {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=onGoogleMapsLoad&libraries=places`;
-            script.async = true;
-            script.defer = true;
-
-            script.onload = () => {
-                isGoogleMapsLoaded = true;
-                resolve();
-            };
-
-            script.onerror = (error) => {
-                reject(new Error('Google Maps API 로드 중 오류 발생: ' + error.message)); // Google Maps API 로드 중 오류 발생 / Google Maps APIのロード中にエラーが発生
-            };
-
-            document.head.appendChild(script);
-        } else {
-            resolve();
-        }
-    });
+// 서버에서 Google Maps API 키를 가져오는 함수
+async function fetchGoogleMapsApiKey() {
+    try {
+        const response = await fetch('/api/google-maps-key');
+        const data = await response.json();
+        return data.key;
+    } catch (error) {
+        throw new Error('Google Maps API 키를 가져오는 중 오류 발생: ' + error.message);
+    }
 }
 
-// Google Maps API가 성공적으로 로드된 후 실행될 콜백 함수 / Google Maps APIが正常にロードされた後に実行されるコールバック関数
-function onGoogleMapsLoad() {
-    isGoogleMapsLoaded = true; // Google Maps가 성공적으로 로드되면 true로 설정 / Google Mapsが正常にロードされた場合はtrueに設定
+// Google Places API만 로드하는 함수 (index.html에서 사용)
+async function loadGooglePlacesApi() {
+    try {
+        const googleMapsApiKey = await fetchGoogleMapsApiKey(); // 서버에서 API 키를 가져옴
+        return new Promise((resolve, reject) => {
+            if (!isGooglePlacesLoaded) {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&libraries=places&callback=initAutocomplete`;
+                script.async = true;
+                script.defer = true;
 
-    // initMap 호출: 지도 초기화 작업을 진행 / initMapを呼び出して地図の初期化を実行
+                script.onload = () => {
+                    isGooglePlacesLoaded = true;
+                    resolve();
+                };
+
+                script.onerror = (error) => {
+                    reject(new Error('Google Places API 로드 중 오류 발생: ' + error.message));
+                };
+
+                document.head.appendChild(script);
+            } else {
+                resolve();
+            }
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+// Google Places API가 성공적으로 로드된 후 실행될 콜백 함수
+function onGooglePlacesLoad() {
+    isGooglePlacesLoaded = true; // Places API가 로드되었음을 표시
+
+    // initAutocomplete 함수가 있다면 호출
+    if (typeof initAutocomplete === 'function') {
+        initAutocomplete(); 
+    }
+}
+
+// Google Maps API를 로드하는 함수 (result.html에서 사용)
+async function loadGoogleMapsApi() {
+    try {
+        const googleMapsApiKey = await fetchGoogleMapsApiKey(); // 서버에서 API 키를 가져옴
+        return new Promise((resolve, reject) => {
+            if (!isGoogleMapsLoaded) {
+                const script = document.createElement('script');
+                script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=places&callback=onGoogleMapsLoad&loading=async`;
+                script.async = true;
+                script.defer = true;
+
+                script.onload = () => {
+                    isGoogleMapsLoaded = true;
+                    resolve();
+                };
+
+                script.onerror = (error) => {
+                    reject(new Error('Google Maps API 로드 중 오류 발생: ' + error.message));
+                };
+
+                document.head.appendChild(script);
+            } else {
+                resolve();
+            }
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+// Google Maps API가 성공적으로 로드된 후 실행될 콜백 함수
+function onGoogleMapsLoad() {
+    isGoogleMapsLoaded = true; // Google Maps가 성공적으로 로드되면 true로 설정
+
+    // initMap 호출: 지도 초기화 작업을 진행
     if (typeof initMap === 'function') {
-        // 지도를 초기화하고 필요한 데이터를 전달 / 地図を初期化し、必要なデータを渡す
         initMap(); 
     }
+}
+// index.html에서 Google Places API를 로드
+if (window.location.pathname.includes('index.html')) {
+    window.onload = loadGooglePlacesApi;
+}
+// result.html에서 Google Maps API를 로드
+if (window.location.pathname.includes('result.html')) {
+    window.onload = loadGoogleMapsApi;
 }
 
 // 모달을 여는 함수 / モーダルを開く関数
