@@ -9,6 +9,26 @@
 
 
 // ============ 공용으로 사용하는 부분 / 共通で使用する部分 ================ 
+
+const headerContent = `
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#EEEEEE] px-10 py-3">
+    <div class="flex items-center gap-4">
+            <a href="index.html">
+                <img
+                    src="images/logo.png"
+                    alt="Amami Logo"
+                    class="h-12 object-contain"
+                />
+            </a>
+        </div>
+    <div>
+        <a href="index.html" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 flex-1 bg-black text-[#FFFFFF] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-gray-800">
+            Search Page
+        </a>
+    </div>
+</header>
+`;
+
 const footerContent = `
 <footer class="flex justify-center">
     <div class="flex max-w-[960px] flex-1 flex-col">
@@ -22,77 +42,77 @@ const footerContent = `
 `;
 
 // JSON 파일 경로 설정 / JSONファイルのパス設定
-const translations = {
-    ja: 'json/ja.json', // 일본어 JSON 파일 경로 / 日本語のJSONファイルパス
-    kr: 'json/kr.json', // 한국어 JSON 파일 경로 / 韓国語のJSONファイルパス
-    en: 'json/en.json'  // 영어 JSON 파일 경로 / 英語のJSONファイルパス
-};
+// const translations = {
+//     ja: 'json/ja.json', // 일본어 JSON 파일 경로 / 日本語のJSONファイルパス
+//     kr: 'json/kr.json', // 한국어 JSON 파일 경로 / 韓国語のJSONファイルパス
+//     en: 'json/en.json'  // 영어 JSON 파일 경로 / 英語のJSONファイルパス
+// };
 
 // 기본 언어 설정 (로컬 스토리지에서 불러오기) / デフォルトの言語設定（ローカルストレージから取得）
-let currentLang = localStorage.getItem('language') || 'ja'; // 로컬 스토리지에서 언어 가져오기, 없으면 일본어로 설정 / ローカルストレージから言語を取得、なければ日本語に設定
+// let currentLang = localStorage.getItem('language') || 'ja'; // 로컬 스토리지에서 언어 가져오기, 없으면 일본어로 설정 / ローカルストレージから言語を取得、なければ日本語に設定
 
 // 언어 데이터 로드 함수 / 言語データのロード関数
-function loadLanguage(lang) {
-    fetch(translations[lang]) // 선택된 언어의 JSON 파일을 가져옴 / 選択された言語のJSONファイルを取得
-        .then(response => response.json()) // JSON 파일을 파싱 / JSONファイルをパース
-        .then(data => {
-            // 데이터 키에 따라 텍스트 업데이트 / データキーに基づいてテキストを更新
-            document.querySelectorAll("[data-i18n]").forEach(element => {
-                const key = element.getAttribute("data-i18n");
-                if (data[key]) {
-                    element.innerText = data[key]; // 해당 키에 맞는 텍스트로 변경 / そのキーに対応するテキストに変更
-                }
-            });
+// function loadLanguage(lang) {
+//     fetch(translations[lang]) // 선택된 언어의 JSON 파일을 가져옴 / 選択された言語のJSONファイルを取得
+//         .then(response => response.json()) // JSON 파일을 파싱 / JSONファイルをパース
+//         .then(data => {
+//             // 데이터 키에 따라 텍스트 업데이트 / データキーに基づいてテキストを更新
+//             document.querySelectorAll("[data-i18n]").forEach(element => {
+//                 const key = element.getAttribute("data-i18n");
+//                 if (data[key]) {
+//                     element.innerText = data[key]; // 해당 키에 맞는 텍스트로 변경 / そのキーに対応するテキストに変更
+//                 }
+//             });
 
-            // 데이터 키에 따라 플레이스홀더 업데이트 / データキーに基づいてプレースホルダーを更新
-            document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
-                const key = element.getAttribute("data-i18n-placeholder");
-                if (data[key]) {
-                    element.setAttribute("placeholder", data[key]); // 해당 키에 맞는 플레이스홀더로 변경 / そのキーに対応するプレースホルダーに変更
-                }
-            });
-        })
-        .catch(error => console.error('Error loading language:', error)); // 오류 처리 / エラー処理
-}
+//             // 데이터 키에 따라 플레이스홀더 업데이트 / データキーに基づいてプレースホルダーを更新
+//             document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+//                 const key = element.getAttribute("data-i18n-placeholder");
+//                 if (data[key]) {
+//                     element.setAttribute("placeholder", data[key]); // 해당 키에 맞는 플레이스홀더로 변경 / そのキーに対応するプレースホルダーに変更
+//                 }
+//             });
+//         })
+//         .catch(error => console.error('Error loading language:', error)); // 오류 처리 / エラー処理
+// }
 
 // 드롭다운 토글 함수 / ドロップダウンのトグル関数
-function toggleDropdown(event) {
-    const dropdown = document.getElementById('languageDropdown');
-    const expanded = dropdown.style.display === 'block';
-    dropdown.style.display = expanded ? 'none' : 'block';
-    document.getElementById('languageIcon').setAttribute('aria-expanded', !expanded);
-}
+// function toggleDropdown(event) {
+//     const dropdown = document.getElementById('languageDropdown');
+//     const expanded = dropdown.style.display === 'block';
+//     dropdown.style.display = expanded ? 'none' : 'block';
+//     document.getElementById('languageIcon').setAttribute('aria-expanded', !expanded);
+// }
 
 // 언어 선택 함수 / 言語選択関数
-function selectLanguage(lang) {
-    currentLang = lang; // 현재 언어 업데이트 / 現在の言語を更新
-    localStorage.setItem('language', currentLang); // 로컬 스토리지에 언어 저장 / ローカルストレージに言語を保存
-    loadLanguage(currentLang); // 선택된 언어 로드 / 選択された言語をロード
+// function selectLanguage(lang) {
+//     currentLang = lang; // 현재 언어 업데이트 / 現在の言語を更新
+//     localStorage.setItem('language', currentLang); // 로컬 스토리지에 언어 저장 / ローカルストレージに言語を保存
+//     loadLanguage(currentLang); // 선택된 언어 로드 / 選択された言語をロード
 
-    // 현재 선택된 언어 표시 업데이트 / 現在選択された言語表示を更新
-    document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
+//     // 현재 선택된 언어 표시 업데이트 / 現在選択された言語表示を更新
+//     document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
 
-    // 드롭다운 닫기 / ドロップダウンを閉じる
-    document.getElementById('languageDropdown').style.display = 'none'; // 선택 후 드롭다운 닫기 / 選択後ドロップダウンを閉じる
-}
+//     // 드롭다운 닫기 / ドロップダウンを閉じる
+//     document.getElementById('languageDropdown').style.display = 'none'; // 선택 후 드롭다운 닫기 / 選択後ドロップダウンを閉じる
+// }
 
 // 드롭다운 외부 클릭 시 드롭다운 숨기기 / ドロップダウンの外部をクリックした時にドロップダウンを非表示
-document.addEventListener('click', function(event) {
-    const dropdown = document.getElementById('languageDropdown');
-    const languageIcon = document.getElementById('languageIcon');
-    const selectedLang = document.getElementById('selectedLang');
+// document.addEventListener('click', function(event) {
+//     const dropdown = document.getElementById('languageDropdown');
+//     const languageIcon = document.getElementById('languageIcon');
+//     const selectedLang = document.getElementById('selectedLang');
 
-    if (!languageIcon.contains(event.target) && !dropdown.contains(event.target) && !selectedLang.contains(event.target)) {
-        dropdown.style.display = 'none'; // 드롭다운 숨기기 / ドロップダウンを非表示
-    }
-});
+//     if (!languageIcon.contains(event.target) && !dropdown.contains(event.target) && !selectedLang.contains(event.target)) {
+//         dropdown.style.display = 'none'; // 드롭다운 숨기기 / ドロップダウンを非表示
+//     }
+// });
 
 // 페이지 로드 시 기본 언어 로드 / ページロード時にデフォルトの言語をロード
-window.onload = () => {
-    loadLanguage(currentLang); // 기본 언어 로드 / デフォルトの言語をロード
-    // 초기 언어 표시 / 初期言語の表示
-    document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
-};
+// window.onload = () => {
+//     loadLanguage(currentLang); // 기본 언어 로드 / デフォルトの言語をロード
+//     // 초기 언어 표시 / 初期言語の表示
+//     document.getElementById('selectedLang').innerText = `${currentLang === 'kr' ? '한국어' : currentLang === 'ja' ? '日本語' : 'English'}`;
+// };
 
 // ================ index.html에서 사용하는 부분 / index.htmlで使用する部分 ==================
 
@@ -223,6 +243,7 @@ function validateLongitude() {
 
 // DOM 로드 후 header와 footer를 삽입 / DOMロード後、ヘッダーとフッターを挿入
 document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('header').innerHTML = headerContent;
     document.getElementById('footer').innerHTML = footerContent;
 
     // result.html 페이지에서만 모달 관련 코드 실행 / result.htmlページでのみモーダル関連コードを実行
