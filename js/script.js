@@ -340,10 +340,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('header').innerHTML = headerContent;
     document.getElementById('footer').innerHTML = footerContent;
 
-    // index.html에서 Google Places API를 로드 / index.htmlでGoogle Places APIをロード
-    if (window.location.pathname.includes('index.html')) {
-        window.onload = loadGooglePlacesApi;
-    }
+    // Google Places API를 로드 /Google Places APIをロード
+    window.onload = loadGooglePlacesApi;
+    
     // result.html에서 Google Maps API를 로드 / result.htmlでGoogle Maps APIをロード
     if (window.location.pathname.includes('result.html')) {
         window.onload = loadGoogleMapsApi;
