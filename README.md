@@ -184,7 +184,7 @@ AMAMI/
 박 준한 (朴 俊漢, PARK JUNHAN)
 
 **앱 이름:**  
-<img src="https://github.com/user-attachments/assets/36427f98-9769-4b96-8c53-780fc792c37d" width="20%">
+<img src="https://github.com/user-attachments/assets/2ec37f40-df53-4d23-85e2-2c10ea32808e" width="20%">
 
 ### Amami  - グルメサーチ
 *당신 주변의 가게 (Anata no mawari no mise)*
