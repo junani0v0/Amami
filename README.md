@@ -27,24 +27,31 @@ Amamiは、ユーザーの現在位置を基準に周辺のレストランを簡
 
 ## リポジトリ URL
 https://github.com/junani0v0/Amami
+
+## デプロイURL
+https://port-0-amami-m1p0ceb3d70b8a92.sel4.cloudtype.app
 ---
 
 
 ## 開発環境
+
 - **開発ツール:** Visual Studio Code (バージョン 1.93.1)
-- **使用言語:** JavaScript (ES6), HTML5, CSS3, JSON
-- **対応OSおよびブラウザ:**  
-  - **OS:** Windows, macOS, Linux  
-  - **ブラウザ:** Chrome, Firefox, Safari など主要なブラウザ
+- **開発言語:** JavaScript (ES6)、HTML5、CSS3、JSON
+- **開発サーバー:** Node.js (バージョン 20.17.0)、npm (バージョン 10.8.2)
+- **デプロイサーバー:**: Cloudtype
+- **対象 OS およびブラウザ:**  
+  - **OS:** Windows、macOS、Linux  
+  - **ブラウザ:** Chrome、Firefox、Safari など主要ブラウザ
 - **開発期間:** 2週間
+
 ---
 
 AMAMI/   
 │   
-├── .env                   # 環境変数ファイル (APIキーの暗号化試行未完了)   
-├── node_modules/          # npmパッケージがインストールされるディレクトリ (APIキーの暗号化試行未完了)    
-├── package.json           # プロジェクトの設定と依存関係リスト (APIキーの暗号化試行未完了)   
-├── server.js              # Node.jsサーバー用ファイル (APIキーの暗号化試行未完了)   
+├── .env                   # 環境変数ファイル  
+├── node_modules/          # npmパッケージがインストールされるディレクトリ 
+├── package.json           # プロジェクトの設定と依存関係リスト
+├── server.js              # Node.jsサーバー用ファイル 
 ├── index.html             # HTMLファイル      
 ├── result.html            # HTMLファイル     
 ├── css/     
@@ -124,35 +131,44 @@ AMAMI/
 
 ---
 
-## 使用API
+## 使用されたAPI
 
 ### 外部APIおよびライブラリ
 1. **Google Fonts (Noto Sans)**  
-   テキストスタイリング用のフォントです。
+   テキストのスタイリング用フォントです。
 2. **Google Maps JavaScript API (Places, Directions)**  
    地図の表示および経路案内機能を提供します。
 3. **HotPepper Gourmet Web Service API**  
-   レストラン情報を検索および取得するためのAPIです。
+   レストラン情報の検索および取得を行うAPIです。
 4. **Tailwind CSS (v3.0)**  
-   ユーティリティクラスベースのCSSフレームワークで、レスポンシブデザインを効率的に構築できます。
+   ユーティリティクラスベースのCSSフレームワークで、レスポンシブデザインを迅速かつ効率的に構築できます。
 5. **Font Awesome**  
-   様々なアイコンを簡単に追加できるアイコンライブラリです。
-6. **i18next(みかんせい)**  
-   多言語対応ライブラリで、テキストの翻訳および言語変更機能を提供します。
+   多様なアイコンを簡単に追加できるアイコンライブラリです。
+6. **i18next**  
+   多言語対応のライブラリで、テキストの翻訳や言語切り替え機能を提供します。
+7. **express**  
+   サーバー構築およびAPI処理を行います。
+8. **dotenv**  
+   環境変数を管理するモジュール（APIキーの保護に使用）。
+9. **node-fetch**  
+   サーバー側でAPIリクエストを処理します。
+10. **cors**  
+    CORS設定を通じて、クライアントが他のオリジンからリソースをリクエストできるようにします。
 
 ---
 
 ### 内蔵ブラウザAPI
 1. **Geolocation API**  
-   ユーザーの現在位置情報を取得し、レストラン検索に利用します。
+   ユーザーの現在位置情報を取得し、レストラン検索に活用します。
 2. **Fetch API**  
-   非同期ネットワークリクエストを通じてAPIデータを取得します。
+   非同期ネットワークリクエストを通じて、APIデータを取得します。
 3. **LocalStorage API**  
-   ローカルストレージにデータを保存し、取り出す機能を提供します。
+   ローカルストレージにデータを保存および取得する機能を提供します。
 4. **DOM API**  
-   HTML要素を動的に操作してユーザーインターフェイスを構築します。
+   HTML要素を動的に操作し、ユーザーインターフェースを構築します。
 5. **Navigator API**  
    ブラウザのナビゲーション情報を提供します。
+
 
 ---
 
@@ -207,13 +223,19 @@ Amami는 사용자의 현재 위치를 기준으로 주변의 레스토랑을 �
 
 ## 리포지토리 URL
 https://github.com/junani0v0/Amami
+
+## 배포 URL
+https://port-0-amami-m1p0ceb3d70b8a92.sel4.cloudtype.app
 ---
 
 ## 개발 환경
+
 - **개발 도구:** Visual Studio Code (버전 1.93.1)
 - **개발 언어:** JavaScript (ES6), HTML5, CSS3, JSON
+- **개발 서버:** Node.js (버전 20.17.0), npm (버전 10.8.2)
+- **배포 서버:** cloudtype
 - **대상 OS 및 브라우저:**  
-  - **OS:** Windows, macOS, Linux  
+  - **OS:** Windows, macOS, Linux
   - **브라우저:** Chrome, Firefox, Safari 등 주요 브라우저
 - **개발 기간:** 2주
 
@@ -221,10 +243,10 @@ https://github.com/junani0v0/Amami
 
 AMAMI/   
 │   
-├── .env                   # 환경 변수 파일 (API 키 암호화 시도 미완성)    
-├── node_modules/          # npm 패키지들이 설치되는 디렉토리 (API 키 암호화 시도 미완성)     
-├── package.json           # 프로젝트의 설정 및 의존성 목록 (API 키 암호화 시도 미완성)   
-├── server.js              # Node.js 서버 파일 (API 키 암호화 시도 미완성)   
+├── .env                   # 환경 변수 파일  
+├── node_modules/          # npm 패키지들이 설치되는 디렉토리 
+├── package.json           # 프로젝트의 설정 및 의존성 목록 
+├── server.js              # Node.js 서버 파일    
 ├── index.html             # HTML 파일      
 ├── result.html            # HTML 파일   
 ├── css/      
@@ -258,7 +280,7 @@ AMAMI/
    Google Maps Places API를 사용하여 주소 입력 시 자동 완성 기능을 지원합니다.
 9. **오류 메시지 및 입력 검증**  
    위도와 경도 값이 잘못 입력되었을 때, 또는 검색 반경이나 정렬 기준이 선택되지 않았을 때 경고 메시지를 표시해 입력 검증을 수행합니다.
-10. **다국어 지원(미완)**  
+10. **다국어 지원**  
    i18next를 통해 한국어, 일본어, 영어 간의 텍스트 변환 및 언어 변경 기능을 제공합니다.
 
 ---
@@ -316,8 +338,16 @@ AMAMI/
    유틸리티 클래스 기반의 CSS 프레임워크로, 반응형 디자인을 빠르고 효율적으로 구축할 수 있습니다.
 5. **Font Awesome**  
    다양한 아이콘을 쉽게 추가할 수 있는 아이콘 라이브러리입니다.
-6. **i18next(미완성)**  
+6. **i18next**  
    다국어 지원 라이브러리로, 텍스트 번역 및 언어 변경 기능을 제공합니다.
+7. **express**  
+   서버 구축 및 API 처리.
+8. **dotenv**  
+   환경 변수 관리를 위한 모듈 (API 키 보호).
+9. **node-fetch**  
+   서버에서 API 호출을 처리.
+10. **cors**  
+    CORS 설정을 통해 클라이언트가 다른 출처에서 요청을 허용.
 
 ---
 
@@ -332,6 +362,7 @@ AMAMI/
    HTML 요소를 동적으로 조작해 사용자 인터페이스를 구성합니다.
 5. **Navigator API**  
    브라우저의 네비게이션 정보를 제공합니다.
+
 
 ---
 
